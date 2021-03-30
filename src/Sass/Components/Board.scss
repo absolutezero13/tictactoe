@@ -1,14 +1,20 @@
 .board {
+  font-size: 1.6rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
 
-.game-field {
-  border: 1px solid black;
-  height: 350px;
-  width: 350px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  &__score {
+    display: flex;
+    align-items: center;
+    width: 50rem;
+    justify-content: space-around;
+  }
+  &__game-field {
+    height: 50rem;
+    width: 50rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
 }
