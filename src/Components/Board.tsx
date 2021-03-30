@@ -9,7 +9,7 @@ const Board: React.FC = () => {
   const [roundNumber, setRoundNumber] = useState(1);
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
-  const [gameWinner, setGameWinner] = useState("");
+  const [gameWinner, setGameWinner] = useState<string>("");
 
   ///////////////////////////////////////////////////////
   useEffect(() => {
@@ -66,6 +66,16 @@ const Board: React.FC = () => {
     setActivePlayer("Player 1");
   };
 
+  const newGame = () => {
+    setRoundWinner("");
+    setSquares(new Array(9).fill(""));
+    setActivePlayer("Player 1");
+    setRoundNumber(1);
+    setPlayer1Score(0);
+    setPlayer2Score(0);
+    setGameWinner("");
+  };
+
   return (
     <div className="board">
       <h2>Round {roundNumber}</h2>
@@ -92,6 +102,7 @@ const Board: React.FC = () => {
       </p>
       <p>
         {roundWinner &&
+          !gameWinner &&
           (roundWinner === "X"
             ? "Player 1 Wins the Round"
             : roundWinner === "O"
@@ -99,6 +110,7 @@ const Board: React.FC = () => {
             : null)}
       </p>
       {gameWinner && <p> {gameWinner} won the Game </p>}
+      <button onClick={newGame}> NEW GAME</button>
     </div>
   );
 };

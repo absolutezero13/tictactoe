@@ -11,8 +11,8 @@
     justify-content: space-around;
   }
   &__game-field {
-    height: 50rem;
-    width: 50rem;
+    height: 45rem;
+    width: 45rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
