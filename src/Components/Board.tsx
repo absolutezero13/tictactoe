@@ -23,6 +23,7 @@ const Board: React.FC = () => {
   useEffect(() => {
     if (roundWinner && !gameWinner && player2Score < 3 && player1Score < 3) {
       setTimeout(() => {
+        setRoundNumber((prevNum) => prevNum + 1);
         reset();
       }, 2000);
     }
@@ -31,7 +32,6 @@ const Board: React.FC = () => {
   useEffect(() => {
     const xOrO = isGameOver(squares);
     if (xOrO && !roundWinner && !gameWinner) {
-      setRoundNumber((prevNum) => prevNum + 1);
       if (xOrO === "X") {
         setPlayer1Score((prevScore) => prevScore + 1);
       }
@@ -68,7 +68,7 @@ const Board: React.FC = () => {
 
   return (
     <div className="board">
-      {!roundWinner && <h2>Round {roundNumber}</h2>}
+      <h2>Round {roundNumber}</h2>
       <div className="board__score">
         <h1>Player 1 </h1>{" "}
         <h2 style={{ color: "red" }}>
