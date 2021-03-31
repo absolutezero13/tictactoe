@@ -10,7 +10,7 @@ const Board: React.FC = () => {
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
   const [gameWinner, setGameWinner] = useState<string>("");
-  const [isDraw, setIsDraw] = useState(false);
+  const [isDraw, setIsDraw] = useState<boolean>(false);
 
   ///////////////////////////////////////////////////////
 
@@ -23,9 +23,27 @@ const Board: React.FC = () => {
     }
   }, [roundWinner]);
 
+  // Recursive AI move
+
+  useEffect(() => {
+    console.log(!roundWinner);
+    const aiMove = (): any => {
+      if (activePlayer === "Player 2" && !roundWinner) {
+        const randomNum = Math.floor(Math.random() * 9);
+        if (squares[randomNum] === "") {
+          squares[randomNum] = "O";
+          setActivePlayer("Player 1");
+        } else {
+          aiMove();
+        }
+      }
+    };
+    setTimeout(() => aiMove(), 500);
+  }, [activePlayer]);
   // NEXT ROUND
 
   useEffect(() => {
+    console.log(roundWinner);
     if (roundWinner && !gameWinner && player2Score < 3 && player1Score < 3) {
       setTimeout(() => {
         setRoundNumber((prevNum) => prevNum + 1);
@@ -48,7 +66,7 @@ const Board: React.FC = () => {
       }
       setRoundWinner(xOrO);
     }
-  }, [squares]);
+  }, [activePlayer]);
 
   // DRAW
 
@@ -60,10 +78,6 @@ const Board: React.FC = () => {
       }, 2000);
     }
   }, [squares]);
-
-  useEffect(() => {
-    aiMove();
-  }, [activePlayer]);
 
   //CLİCK FUNC
 
@@ -87,18 +101,6 @@ const Board: React.FC = () => {
         return square;
       });
     });
-  };
-  // Recursive AI move
-  const aiMove = (): any => {
-    if (activePlayer === "Player 2") {
-      const randomNum = Math.floor(Math.random() * 9);
-      if (squares[randomNum] === "") {
-        squares[randomNum] = "O";
-        setActivePlayer("Player 1");
-      } else {
-        aiMove();
-      }
-    }
   };
 
   // ROUND RESET
