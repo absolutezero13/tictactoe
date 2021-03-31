@@ -7,8 +7,13 @@
   &__score {
     display: flex;
     align-items: center;
-    width: 50rem;
-    justify-content: space-around;
+    width: 45rem;
+    justify-content: space-between;
+
+    h1 {
+      width: 15rem;
+      text-align: center;
+    }
   }
   &__game-field {
     height: 45rem;

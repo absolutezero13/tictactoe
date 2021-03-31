@@ -4,7 +4,7 @@ import Square from "./Square";
 
 const Board: React.FC = () => {
   const [squares, setSquares] = useState(new Array(9).fill(""));
-  const [activePlayer, setActivePlayer] = useState("Player 1");
+  const [activePlayer, setActivePlayer] = useState("Human");
   const [roundWinner, setRoundWinner] = useState<any>("");
   const [roundNumber, setRoundNumber] = useState(1);
   const [player1Score, setPlayer1Score] = useState(0);
@@ -16,8 +16,8 @@ const Board: React.FC = () => {
   useEffect(() => {
     if (player2Score >= 3 || player1Score >= 3) {
       player1Score > player2Score
-        ? setGameWinner("Player 1")
-        : setGameWinner("Player 2");
+        ? setGameWinner("Human")
+        : setGameWinner("Ai");
     }
   }, [roundWinner]);
 
@@ -71,7 +71,7 @@ const Board: React.FC = () => {
       !squares[id] &&
       !roundWinner &&
       !gameWinner &&
-      activePlayer === "Player 1"
+      activePlayer === "Human"
     ) {
       setSquares((prevSquares) => {
         return prevSquares.map((square, i) => {
@@ -81,16 +81,16 @@ const Board: React.FC = () => {
           return square;
         });
       });
-      setActivePlayer("Player 2");
+      setActivePlayer("Ai");
     }
   };
 
   const aiMove = (): any => {
-    if (activePlayer === "Player 2" && !roundWinner && !isDraw) {
+    if (activePlayer === "Ai" && !roundWinner && !isDraw) {
       const randomNum = Math.floor(Math.random() * 9);
       if (squares[randomNum] === "") {
         squares[randomNum] = "O";
-        setActivePlayer("Player 1");
+        setActivePlayer("Human");
       } else {
         aiMove();
       }
@@ -102,7 +102,7 @@ const Board: React.FC = () => {
   const reset = () => {
     setRoundWinner("");
     setSquares(new Array(9).fill(""));
-    setActivePlayer("Player 1");
+    setActivePlayer("Human");
     setIsDraw(false);
   };
 
@@ -120,11 +120,11 @@ const Board: React.FC = () => {
     <div className="board">
       <h2>Round {roundNumber}</h2>
       <div className="board__score">
-        <h1>Player 1 </h1>{" "}
+        <h1>Human </h1>{" "}
         <h2 style={{ color: "red" }}>
           {player1Score} : {player2Score}
         </h2>
-        <h1>Player 2</h1>
+        <h1>Ai</h1>
       </div>
       <div className="board__game-field">
         {squares.map((square, i) => {
@@ -135,7 +135,7 @@ const Board: React.FC = () => {
       </div>
       <p
         style={{
-          marginRight: activePlayer === "Player 1" ? "250px" : "-250px",
+          marginRight: activePlayer === "Human" ? "250px" : "-250px",
         }}
       >
         {!roundWinner && activePlayer + "'s turn"}
@@ -144,9 +144,9 @@ const Board: React.FC = () => {
         {roundWinner &&
           !gameWinner &&
           (roundWinner === "X"
-            ? "Player 1 Wins the Round"
+            ? "Human Wins the Round"
             : roundWinner === "O"
-            ? "Player 2 Wins the Round"
+            ? "Ai Wins the Round"
             : null)}
       </p>
       {isDraw && <p>Draw !</p>}
