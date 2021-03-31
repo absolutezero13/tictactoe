@@ -160,7 +160,10 @@ const Board: React.FC = () => {
       </p>
       {isDraw && <p>Draw !</p>}
       {gameWinner && <p> {gameWinner} won the Game </p>}
-      <button onClick={newGame}> NEW GAME</button>
+      <button onClick={newGame} className="new-game">
+        {" "}
+        NEW GAME
+      </button>
     </div>
   );
 };

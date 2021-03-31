@@ -1,8 +1,8 @@
 import React from "react";
-
+import { motion } from "framer-motion";
 const Square: React.FC<any> = ({ clickSquare, square, i }) => {
   return (
-    <div
+    <motion.div
       onClick={() => clickSquare(i)}
       style={{
         borderRight:
@@ -15,9 +15,12 @@ const Square: React.FC<any> = ({ clickSquare, square, i }) => {
             : "7px solid rgb(218, 208, 208)",
       }}
       className="square"
+      initial={{ x: -500 }}
+      animate={{ x: 0 }}
+      exit={{ x: -500 }}
     >
       {square}
-    </div>
+    </motion.div>
   );
 };
 

@@ -7,7 +7,7 @@
   &__score {
     display: flex;
     align-items: center;
-    width: 45rem;
+    width: 40rem;
     justify-content: space-between;
 
     h1 {
@@ -17,7 +17,7 @@
     &__scores {
       padding: 5px;
       font-size: 3rem;
-      border: 3px solid $text-color;
+      border: 3px solid $grey;
       width: 10rem;
       text-align: center;
       display: flex;
@@ -31,10 +31,26 @@
     }
   }
   &__game-field {
-    height: 45rem;
-    width: 45rem;
+    height: 40rem;
+    width: 40rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
+  }
+}
+
+.new-game {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  outline: none;
+  border-radius: 100px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: $grey;
+  font-weight: 700;
+  color: rgb(4, 22, 82);
+  border: none;
+  transition: all 0.2s;
+  &:active {
+    transform: translate(5px);
   }
 }
