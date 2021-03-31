@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { isGameOver } from "../Helper/helper";
+import { isRoundOver } from "../Helper/helper";
 import Square from "./Square";
 
 const Board: React.FC = () => {
@@ -10,8 +10,11 @@ const Board: React.FC = () => {
   const [player1Score, setPlayer1Score] = useState(0);
   const [player2Score, setPlayer2Score] = useState(0);
   const [gameWinner, setGameWinner] = useState<string>("");
+  const [isDraw, setIsDraw] = useState(false);
 
   ///////////////////////////////////////////////////////
+
+  // GAME END
   useEffect(() => {
     if (player2Score >= 3 || player1Score >= 3) {
       player1Score > player2Score
@@ -19,6 +22,8 @@ const Board: React.FC = () => {
         : setGameWinner("Player 2");
     }
   }, [roundWinner]);
+
+  // NEXT ROUND
 
   useEffect(() => {
     if (roundWinner && !gameWinner && player2Score < 3 && player1Score < 3) {
@@ -29,8 +34,11 @@ const Board: React.FC = () => {
     }
   }, [roundWinner]);
 
+  // ROUND END
+
   useEffect(() => {
-    const xOrO = isGameOver(squares);
+    const xOrO = isRoundOver(squares);
+
     if (xOrO && !roundWinner && !gameWinner) {
       if (xOrO === "X") {
         setPlayer1Score((prevScore) => prevScore + 1);
@@ -41,6 +49,19 @@ const Board: React.FC = () => {
       setRoundWinner(xOrO);
     }
   }, [squares]);
+
+  // DRAW
+
+  useEffect(() => {
+    if (squares.indexOf("") === -1 && !roundWinner) {
+      setIsDraw(true);
+      setTimeout(() => {
+        reset();
+      }, 2000);
+    }
+  }, [squares]);
+
+  //CLİCK FUNC
 
   const clickSquare = (id: number): void => {
     if (!squares[id] && !roundWinner && !gameWinner) {
@@ -60,16 +81,19 @@ const Board: React.FC = () => {
     });
   };
 
+  // ROUND RESET
+
   const reset = () => {
     setRoundWinner("");
     setSquares(new Array(9).fill(""));
     setActivePlayer("Player 1");
+    setIsDraw(false);
   };
 
+  // GAME RESET
+
   const newGame = () => {
-    setRoundWinner("");
-    setSquares(new Array(9).fill(""));
-    setActivePlayer("Player 1");
+    reset();
     setRoundNumber(1);
     setPlayer1Score(0);
     setPlayer2Score(0);
@@ -109,6 +133,7 @@ const Board: React.FC = () => {
             ? "Player 2 Wins the Round"
             : null)}
       </p>
+      {isDraw && <p>Draw !</p>}
       {gameWinner && <p> {gameWinner} won the Game </p>}
       <button onClick={newGame}> NEW GAME</button>
     </div>

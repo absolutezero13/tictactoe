@@ -1,4 +1,4 @@
-export const isGameOver = (squares: String[]) => {
+export const isRoundOver = (squares: String[]) => {
   const won = [
     [0, 1, 2],
     [3, 4, 5],
