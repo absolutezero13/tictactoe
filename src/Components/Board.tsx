@@ -82,25 +82,22 @@ const Board: React.FC = () => {
   //CLİCK FUNC
 
   const clickSquare = (id: number): void => {
-    if (!squares[id] && !roundWinner && !gameWinner) {
-      if (activePlayer === "Player 1") {
-        setActivePlayer("Player 2");
-      }
-    }
-    setSquares((prevSquares) => {
-      return prevSquares.map((square, i) => {
-        if (
-          i === id &&
-          !square &&
-          !roundWinner &&
-          !gameWinner &&
-          activePlayer === "Player 1"
-        ) {
-          square = "X";
-        }
-        return square;
+    if (
+      !squares[id] &&
+      !roundWinner &&
+      !gameWinner &&
+      activePlayer === "Player 1"
+    ) {
+      setSquares((prevSquares) => {
+        return prevSquares.map((square, i) => {
+          if (i === id) {
+            square = "X";
+          }
+          return square;
+        });
       });
-    });
+      setActivePlayer("Player 2");
+    }
   };
 
   // ROUND RESET
