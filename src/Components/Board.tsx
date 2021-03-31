@@ -12,8 +12,6 @@ const Board: React.FC = () => {
   const [gameWinner, setGameWinner] = useState<string>("");
   const [isDraw, setIsDraw] = useState<boolean>(false);
 
-  ///////////////////////////////////////////////////////
-
   // GAME END
   useEffect(() => {
     if (player2Score >= 3 || player1Score >= 3) {
@@ -23,37 +21,7 @@ const Board: React.FC = () => {
     }
   }, [roundWinner]);
 
-  // Recursive AI move
-
-  useEffect(() => {
-    console.log(!roundWinner);
-    const aiMove = (): any => {
-      if (activePlayer === "Player 2" && !roundWinner) {
-        const randomNum = Math.floor(Math.random() * 9);
-        if (squares[randomNum] === "") {
-          squares[randomNum] = "O";
-          setActivePlayer("Player 1");
-        } else {
-          aiMove();
-        }
-      }
-    };
-    setTimeout(() => aiMove(), 500);
-  }, [activePlayer]);
-  // NEXT ROUND
-
-  useEffect(() => {
-    console.log(roundWinner);
-    if (roundWinner && !gameWinner && player2Score < 3 && player1Score < 3) {
-      setTimeout(() => {
-        setRoundNumber((prevNum) => prevNum + 1);
-        reset();
-      }, 2000);
-    }
-  }, [roundWinner]);
-
   // ROUND END
-
   useEffect(() => {
     const xOrO = isRoundOver(squares);
 
@@ -67,6 +35,23 @@ const Board: React.FC = () => {
       setRoundWinner(xOrO);
     }
   }, [activePlayer]);
+
+  // Recursive AI move
+
+  useEffect(() => {
+    setTimeout(() => aiMove(), 500);
+  }, [activePlayer]);
+
+  // NEXT ROUND
+
+  useEffect(() => {
+    if (roundWinner && !gameWinner && player2Score < 3 && player1Score < 3) {
+      setTimeout(() => {
+        setRoundNumber((prevNum) => prevNum + 1);
+        reset();
+      }, 2000);
+    }
+  }, [roundWinner]);
 
   // DRAW
 
@@ -97,6 +82,18 @@ const Board: React.FC = () => {
         });
       });
       setActivePlayer("Player 2");
+    }
+  };
+
+  const aiMove = (): any => {
+    if (activePlayer === "Player 2" && !roundWinner && !isDraw) {
+      const randomNum = Math.floor(Math.random() * 9);
+      if (squares[randomNum] === "") {
+        squares[randomNum] = "O";
+        setActivePlayer("Player 1");
+      } else {
+        aiMove();
+      }
     }
   };
 
