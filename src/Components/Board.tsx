@@ -61,24 +61,44 @@ const Board: React.FC = () => {
     }
   }, [squares]);
 
+  useEffect(() => {
+    aiMove();
+  }, [activePlayer]);
+
   //CLİCK FUNC
 
   const clickSquare = (id: number): void => {
     if (!squares[id] && !roundWinner && !gameWinner) {
       if (activePlayer === "Player 1") {
         setActivePlayer("Player 2");
-      } else {
-        setActivePlayer("Player 1");
       }
     }
     setSquares((prevSquares) => {
       return prevSquares.map((square, i) => {
-        if (i === id && !square && !roundWinner && !gameWinner) {
-          square = activePlayer === "Player 1" ? "X" : "O";
+        if (
+          i === id &&
+          !square &&
+          !roundWinner &&
+          !gameWinner &&
+          activePlayer === "Player 1"
+        ) {
+          square = "X";
         }
         return square;
       });
     });
+  };
+  // Recursive AI move
+  const aiMove = (): any => {
+    if (activePlayer === "Player 2") {
+      const randomNum = Math.floor(Math.random() * 9);
+      if (squares[randomNum] === "") {
+        squares[randomNum] = "O";
+        setActivePlayer("Player 1");
+      } else {
+        aiMove();
+      }
+    }
   };
 
   // ROUND RESET
