@@ -1,6 +1,6 @@
 .square {
-  border-right: 0.5px solid black;
-  border-bottom: 0.5px solid black;
+  border-right: 0.5px solid $text-color;
+  border-bottom: 0.5px solid $text-color;
   display: flex;
   align-items: center;
   justify-content: center;

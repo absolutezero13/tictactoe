@@ -5,9 +5,14 @@ const Square: React.FC<any> = ({ clickSquare, square, i }) => {
     <div
       onClick={() => clickSquare(i)}
       style={{
-        borderRight: i === 8 || i === 5 || i === 2 ? "none" : "1px solid black",
+        borderRight:
+          i === 8 || i === 5 || i === 2
+            ? "none"
+            : "7px solid rgb(218, 208, 208)",
         borderBottom:
-          i === 6 || i === 7 || i === 8 ? "none" : "1px solid black",
+          i === 6 || i === 7 || i === 8
+            ? "none"
+            : "7px solid rgb(218, 208, 208)",
       }}
       className="square"
     >

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { isRoundOver } from "../Helper/helper";
 import Square from "./Square";
-
+import { motion } from "framer-motion";
 const Board: React.FC = () => {
   const [squares, setSquares] = useState(new Array(9).fill(""));
   const [activePlayer, setActivePlayer] = useState("Human");
@@ -120,10 +120,16 @@ const Board: React.FC = () => {
     <div className="board">
       <h2>Round {roundNumber}</h2>
       <div className="board__score">
-        <h1>Human </h1>{" "}
-        <h2 style={{ color: "red" }}>
-          {player1Score} : {player2Score}
-        </h2>
+        <h1>Human </h1>
+        <div className="board__score__scores">
+          <div className="board__score__scores__score">
+            <p>{player1Score}</p>
+          </div>
+          -
+          <div className="board__score__scores__score">
+            <p>{player2Score}</p>
+          </div>
+        </div>
         <h1>Ai</h1>
       </div>
       <div className="board__game-field">
@@ -133,13 +139,16 @@ const Board: React.FC = () => {
           );
         })}
       </div>
-      <p
+      <motion.p
         style={{
           marginRight: activePlayer === "Human" ? "250px" : "-250px",
         }}
+        initial={{ x: -500 }}
+        animate={{ x: 0 }}
+        exit={{ x: -500 }}
       >
         {!roundWinner && activePlayer + "'s turn"}
-      </p>
+      </motion.p>
       <p>
         {roundWinner &&
           !gameWinner &&
