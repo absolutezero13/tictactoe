@@ -2,6 +2,17 @@ import React, { useEffect, useState } from "react";
 import { isRoundOver } from "../Helper/helper";
 import Square from "./Square";
 import { motion } from "framer-motion";
+import { Button, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  button: {
+    fontSize: "1.6rem",
+    fontWeight: 700,
+    color: "rgb(78, 89, 235)",
+    fontFamily: "Quicksand",
+  },
+});
+
 const Board: React.FC = () => {
   const [squares, setSquares] = useState(new Array(9).fill(""));
   const [activePlayer, setActivePlayer] = useState("Human");
@@ -11,7 +22,7 @@ const Board: React.FC = () => {
   const [player2Score, setPlayer2Score] = useState<number>(0);
   const [gameWinner, setGameWinner] = useState<string>("");
   const [isDraw, setIsDraw] = useState<boolean>(false);
-
+  const classes = useStyles();
   // GAME END
 
   useEffect(() => {
@@ -162,9 +173,10 @@ const Board: React.FC = () => {
       </p>
       {isDraw && <p>Draw !</p>}
       {gameWinner && <p> {gameWinner} won the Game </p>}
-      <button onClick={newGame} className="new-game">
+
+      <Button variant="contained" className={classes.button} onClick={newGame}>
         NEW GAME
-      </button>
+      </Button>
     </div>
   );
 };
