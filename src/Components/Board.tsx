@@ -6,13 +6,14 @@ const Board: React.FC = () => {
   const [squares, setSquares] = useState(new Array(9).fill(""));
   const [activePlayer, setActivePlayer] = useState("Human");
   const [roundWinner, setRoundWinner] = useState<any>("");
-  const [roundNumber, setRoundNumber] = useState(1);
-  const [player1Score, setPlayer1Score] = useState(0);
-  const [player2Score, setPlayer2Score] = useState(0);
+  const [roundNumber, setRoundNumber] = useState<number>(1);
+  const [player1Score, setPlayer1Score] = useState<number>(0);
+  const [player2Score, setPlayer2Score] = useState<number>(0);
   const [gameWinner, setGameWinner] = useState<string>("");
   const [isDraw, setIsDraw] = useState<boolean>(false);
 
   // GAME END
+
   useEffect(() => {
     if (player2Score >= 3 || player1Score >= 3) {
       player1Score > player2Score
@@ -22,6 +23,7 @@ const Board: React.FC = () => {
   }, [roundWinner]);
 
   // ROUND END
+
   useEffect(() => {
     const xOrO = isRoundOver(squares);
 
@@ -34,12 +36,12 @@ const Board: React.FC = () => {
       }
       setRoundWinner(xOrO);
     }
-  }, [activePlayer]);
+  }, [squares]);
 
   // Recursive AI move
 
   useEffect(() => {
-    setTimeout(() => aiMove(), 500);
+    aiMove();
   }, [activePlayer]);
 
   // NEXT ROUND
@@ -64,7 +66,7 @@ const Board: React.FC = () => {
     }
   }, [squares]);
 
-  //CLİCK FUNC
+  //CLICK FUNC
 
   const clickSquare = (id: number): void => {
     if (
@@ -161,7 +163,6 @@ const Board: React.FC = () => {
       {isDraw && <p>Draw !</p>}
       {gameWinner && <p> {gameWinner} won the Game </p>}
       <button onClick={newGame} className="new-game">
-        {" "}
         NEW GAME
       </button>
     </div>
