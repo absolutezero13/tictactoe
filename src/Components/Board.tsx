@@ -52,7 +52,9 @@ const Board: React.FC = () => {
   // Recursive AI move
 
   useEffect(() => {
-    aiMove();
+    if (activePlayer === "Ai" && !roundWinner && !isDraw) {
+      setTimeout(() => aiMove(), 700);
+    }
   }, [activePlayer]);
 
   // NEXT ROUND
@@ -98,15 +100,13 @@ const Board: React.FC = () => {
     }
   };
 
-  const aiMove = (): any => {
-    if (activePlayer === "Ai" && !roundWinner && !isDraw) {
-      const randomNum = Math.floor(Math.random() * 9);
-      if (squares[randomNum] === "") {
-        squares[randomNum] = "O";
-        setActivePlayer("Human");
-      } else {
-        aiMove();
-      }
+  const aiMove = (): void => {
+    const randomNum = Math.floor(Math.random() * 9);
+    if (squares[randomNum] === "") {
+      squares[randomNum] = "O";
+      setActivePlayer("Human");
+    } else {
+      aiMove();
     }
   };
 
